@@ -128,7 +128,7 @@ export default function Layout() {
 
 	const [currentlyOpenPreviewPane, setOpenPreviewPane] = React.useState(0);
 
-	function onKeyDown(event: React.KeyboardEvent<HTMLTextAreaElement>) {
+	function onKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
 		const isCmdOrCtrl = event.metaKey || event.ctrlKey;
 		const isShift = event.shiftKey;
 		console.debug('keydown', event.key, isCmdOrCtrl, event);
@@ -186,6 +186,8 @@ export default function Layout() {
 			});
 		} else if (isCmdOrCtrl && event.key === 'p') {
 			toggleIsAlwaysOnTop();
+		} else if (isCmdOrCtrl && event.key === '.') {
+			document.querySelector<HTMLTextAreaElement>('prompt')?.focus()
 		} else if (
 			event.shiftKey &&
 			event.metaKey &&
@@ -205,7 +207,7 @@ export default function Layout() {
 	}
 
 	return (
-		<div id="windowRef" className="flex flex-col" ref={windowRef}>
+		<div id="windowRef" onKeyDown={onKeyDown} className="flex flex-col" ref={windowRef}>
 			<TitleBar {...{ isAlwaysOnTop, toggleIsAlwaysOnTop }} />
 			<SettingsMenu
 				open={isSettingsOpen}
@@ -247,12 +249,12 @@ export default function Layout() {
 						id="prompt"
 						value={superprompt}
 						onChange={(e) => setSuperprompt(e.target.value)}
-						onKeyDown={onKeyDown}
+						onKeyDown={enterKeyHandler}
 						name="prompt"
-						placeholder={`Enter a superprompt here.
-- Quick Open: ${CmdOrCtrlKey}+Shift+G or Submit: ${CmdOrCtrlKey}+Enter
-- Switch windows: ${CmdOrCtrlKey}+1/2/3/etc, or Global Resize/Pin: ${CmdOrCtrlKey} -/+/p, or Back/Fwd: ${CmdOrCtrlKey} H/L
-- New chat: ${CmdOrCtrlKey}+R or Reset windows evenly: ${CmdOrCtrlKey}+Shift+A`}
+						placeholder="Enter a superprompt here.
+- Quick Open: Cmd+Shift+G or Submit: Cmd/Ctrl+Enter
+- Switch windows: Cmd+1/2/3/etc, or Resize/Pin windows: Cmd -/+/p, or Back/Fwd: Cmd H/L
+- New chat: Cmd+R or Reset windows evenly: Cmd+Shift+A"
 					/>
 					<div className="flex items-center justify-center p-4 space-x-2">
 						<button
