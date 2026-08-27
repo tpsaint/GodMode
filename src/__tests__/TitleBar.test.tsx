@@ -21,11 +21,11 @@ describe('TitleBar', () => {
 		const toggleIsAlwaysOnTop = jest.fn();
 		render(
 			<TitleBar
-				isAlwaysOnTop={false}
+				isAlwaysOnTop={true}
 				toggleIsAlwaysOnTop={toggleIsAlwaysOnTop}
 			/>,
 		);
-		fireEvent.click(screen.getByRole('button'));
+		fireEvent.click(screen.getByRole('button', { name: /pinned/i }));
 		expect(toggleIsAlwaysOnTop).toHaveBeenCalledTimes(1);
 	});
 });
