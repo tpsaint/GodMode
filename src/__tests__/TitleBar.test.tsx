@@ -8,6 +8,7 @@ describe('TitleBar', () => {
 			<TitleBar isAlwaysOnTop={false} toggleIsAlwaysOnTop={() => undefined} />,
 		);
 		expect(screen.getByText('🐣 GodMode')).toBeInTheDocument();
+		expect(screen.queryByText('Pinned')).not.toBeInTheDocument();
 	});
 
 	it('shows pinned label when always on top is enabled', () => {
