@@ -29,4 +29,16 @@ describe('TitleBar', () => {
 		fireEvent.click(screen.getByRole('button', { name: /pinned/i }));
 		expect(toggleIsAlwaysOnTop).toHaveBeenCalledTimes(1);
 	});
+
+	it('calls toggle handler when unpinned button is clicked', () => {
+		const toggleIsAlwaysOnTop = jest.fn();
+		render(
+			<TitleBar
+				isAlwaysOnTop={false}
+				toggleIsAlwaysOnTop={toggleIsAlwaysOnTop}
+			/>,
+		);
+		fireEvent.click(screen.getByRole('button'));
+		expect(toggleIsAlwaysOnTop).toHaveBeenCalledTimes(1);
+	});
 });
